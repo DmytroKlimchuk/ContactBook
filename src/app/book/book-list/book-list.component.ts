@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BookService } from '../book.service';
 import { Book } from '../book.model';
 
+declare const $: any;
+
 @Component({
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
@@ -12,13 +14,24 @@ export class BookListComponent implements OnInit {
   allRecords: Book[];
   records: Book[];
   showCheckbox = false;
-  filter = true;
+  filter = false;
 
   constructor(
     private BookService: BookService
   ) { }
 
   ngOnInit() {
+
+    $(document).ready(function() {
+      $('.fixed-action-btn').floatingActionButton({
+        direction: 'left'
+      });
+    });
+
+    $(document).ready(function(){
+      $('.modal').modal();
+    });
+
     this.allRecords = this.BookService.getRecords();
     this.records = this.allRecords;
   }
@@ -32,8 +45,10 @@ export class BookListComponent implements OnInit {
   }
 
   checkRecord(index) {
-    const el: any = document.getElementById('check_' + index);
-    el.checked = !el.checked;
+    if (this.showCheckbox) {
+      const el: any = document.getElementById('check_' + index);
+      el.checked = !el.checked;
+    }
   }
 
   checkAll(e) {

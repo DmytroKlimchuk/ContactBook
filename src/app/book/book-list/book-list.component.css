@@ -15,3 +15,24 @@ table tr:hover {
     height: 16px;
     line-height: 16px;
 }
+
+.actions {
+    position: relative;
+}
+
+.fixed-action-btn {
+    text-align: right;
+    position: relative;
+    z-index: 10;
+    padding: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.fixed-action-btn.direction-left ul, .fixed-action-btn.direction-right ul {
+    right: 44px;
+}
+
+.fixed-action-btn.direction-left ul li, .fixed-action-btn.direction-right ul li {
+    margin: 0 15px 0 0;
+}

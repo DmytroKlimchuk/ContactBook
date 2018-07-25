@@ -16,8 +16,8 @@
         <th>Прізвище</th>
         <th>Ім'я</th>
         <th>E-mail</th>
-        <th>E-mail</th>
         <th>Мобільний</th>
+        <th></th>
     </tr>
   </thead>
 
@@ -31,8 +31,19 @@
       <td>{{ record.surname }}</td>
       <td>{{ record.name }}</td>
       <td>{{ record.email }}</td>
-      <td>{{ record.city }}</td>
       <td>{{ record.mobile }}</td>
+      <td class="actions">
+        <div class="fixed-action-btn">
+          <a class="btn-floating btn-flat red">
+            <i class="large material-icons">menu</i>
+          </a>
+          <ul>
+            <li><a [routerLink]="[{ outlets: { 'popup': [ 'view', i] }}]" skipLocationChange class="btn-floating green"><i class="material-icons">pageview</i></a></li>
+            <li><a class="btn-floating yellow darken-1"><i class="material-icons">edit</i></a></li>
+            <li><a class="btn-floating red"><i class="material-icons">delete</i></a></li>
+          </ul>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -45,3 +56,4 @@
 <ng-template #search>
   <h5 class="center-align">По заданим критеріям нічого не знайдено</h5>
 </ng-template>
+
