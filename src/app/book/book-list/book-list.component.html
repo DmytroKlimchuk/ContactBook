@@ -1,31 +1,47 @@
-<table class="highlight responsive-table ">
+<div class="right-align links">
+    <a (click)="showCheckBoxes()" class="waves-effect waves-light btn-small"><i class="material-icons left">check</i>Вибрати</a>
+    <a (click)="showFilter()" class="waves-effect waves-light btn-small"><i class="material-icons right">settings</i>Фільтр</a>
+</div>
+
+<app-book-filter *ngIf="filter" [records]="allRecords" (recordsChanged)="onRecordsChanged($event)"></app-book-filter>
+
+<table class="highlight responsive-table records" *ngIf="records; else info">
   <thead>
     <tr>
+        <th *ngIf="showCheckbox">
+          <label>
+              <input type="checkbox" (click)="checkAll($event)"/><span></span>
+          </label>
+        </th>
         <th>Прізвище</th>
         <th>Ім'я</th>
+        <th>E-mail</th>
         <th>E-mail</th>
         <th>Мобільний</th>
     </tr>
   </thead>
 
-  <tbody>
-    <tr>
-      <td>Alvin</td>
-      <td>Eclair</td>
-      <td>$0.87</td>
-      <td>$0.87</td>
-    </tr>
-    <tr>
-      <td>Alan</td>
-      <td>Jellybean</td>
-      <td>$3.76</td>
-      <td>$3.76</td>
-    </tr>
-    <tr>
-      <td>Jonathan</td>
-      <td>Lollipop</td>
-      <td>$7.00</td>
-      <td>$7.00</td>
+  <tbody *ngIf="records.length; else search">
+    <tr *ngFor="let record of records; let i = index" (click)="checkRecord(i)">
+      <td *ngIf="showCheckbox">
+        <label>
+          <input type="checkbox" class="checkbox" id="check_{{ i }}" value="{{ i }}"/><span></span>
+        </label>
+      </td>
+      <td>{{ record.surname }}</td>
+      <td>{{ record.name }}</td>
+      <td>{{ record.email }}</td>
+      <td>{{ record.city }}</td>
+      <td>{{ record.mobile }}</td>
     </tr>
   </tbody>
 </table>
+
+<ng-template #info>
+  <h5 class="center-align">Список контактів порожній</h5>
+</ng-template>
+
+
+<ng-template #search>
+  <h5 class="center-align">По заданим критеріям нічого не знайдено</h5>
+</ng-template>

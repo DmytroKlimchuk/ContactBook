@@ -13,7 +13,7 @@ interface IBook {
     city: string;
     email: string;
     mobile: number;
-    work_place: string;
+    company: string;
 }
 
 export class Book implements IBook {
@@ -25,7 +25,7 @@ export class Book implements IBook {
         public city: string,
         public email: string,
         public mobile: number,
-        public work_place: string
+        public company: string
     ) {}
 
 }

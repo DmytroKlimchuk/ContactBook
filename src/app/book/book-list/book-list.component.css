@@ -1,0 +1,17 @@
+table tr:hover {
+    cursor: pointer;
+}
+
+.links a{
+    margin-left: 5px;
+}
+
+[type="checkbox"]+span:not(.lever):before, 
+[type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+    margin-top: 2px;
+}
+
+[type="checkbox"]+span:not(.lever) {
+    height: 16px;
+    line-height: 16px;
+}

@@ -7,13 +7,17 @@ import { FooterComponent } from './footer/footer.component';
 import { BookComponent } from './book/book.component';
 import { BookListComponent } from './book/book-list/book-list.component';
 
+import { BookService } from './book/book.service';
+import { BookFilterComponent } from './book/book-filter/book-filter.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
     BookComponent,
-    BookListComponent
+    BookListComponent,
+    BookFilterComponent
   ],
   imports: [
     BrowserModule
