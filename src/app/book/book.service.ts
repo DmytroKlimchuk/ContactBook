@@ -32,4 +32,8 @@ export class BookService {
     return cities;
   }
 
+  getRecordById(id) {
+    return this.records[id];
+  }
+
 }

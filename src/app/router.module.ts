@@ -5,15 +5,18 @@ import { RouterModule, Routes } from '@angular/router';
 //Залежності
 import { BookComponent } from './book/book.component';
 import { ViewComponent } from './modal/view/view.component';
+import { AddComponent } from './modal/add/add.component';
 
 const routes: Routes = [
   { path: '', component: BookComponent},
-  { path: 'view/:id', component: ViewComponent, outlet: 'popup'}
+  { path: 'view/:id', component: ViewComponent, outlet: 'popup'},
+  { path: 'add', component: AddComponent, outlet: 'popup'}
 ];
 
 export const routeComponents = [
   BookComponent,
-  ViewComponent
+  ViewComponent,
+  AddComponent
 ];
 
 @NgModule({

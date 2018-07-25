@@ -8,7 +8,6 @@ import { BookListComponent } from './book/book-list/book-list.component';
 
 import { BookService } from './book/book.service';
 import { BookFilterComponent } from './book/book-filter/book-filter.component';
-import { ModifyComponent } from './book/modify/modify.component';
 
 import { RoutingrModule, routeComponents } from './router.module';
 
@@ -19,7 +18,6 @@ import { RoutingrModule, routeComponents } from './router.module';
     FooterComponent,
     BookListComponent,
     BookFilterComponent,
-    ModifyComponent,
     ...routeComponents
   ],
   imports: [
