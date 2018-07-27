@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { DataStorageService } from '../shared/data-storage.service';
+
 declare const $: any;
 
 @Component({
@@ -10,13 +12,15 @@ declare const $: any;
 export class HeaderComponent implements OnInit {
 
 
-  constructor() { }
+  constructor(private DataStorageService: DataStorageService) { }
 
   ngOnInit() {
 
     $(document).ready(function() {
       $('.sidenav').sidenav();
     });
+
+    this.DataStorageService.getData();
 
   }
 

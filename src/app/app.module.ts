@@ -1,14 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BookListComponent } from './book/book-list/book-list.component';
-
+import { DataStorageService } from './shared/data-storage.service';
 import { BookService } from './book/book.service';
 import { BookFilterComponent } from './book/book-filter/book-filter.component';
-
 import { RoutingrModule, routeComponents } from './router.module';
 
 @NgModule({
@@ -22,9 +23,12 @@ import { RoutingrModule, routeComponents } from './router.module';
   ],
   imports: [
     BrowserModule,
-    RoutingrModule
+    RoutingrModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpModule
   ],
-  providers: [ BookService ],
+  providers: [ BookService, DataStorageService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

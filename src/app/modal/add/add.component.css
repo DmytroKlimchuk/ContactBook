@@ -1,6 +1,7 @@
 .modal {
     display: block;
     z-index: 99999;
+    max-height: none;
 }
 
 .modal-content {

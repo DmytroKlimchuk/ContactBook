@@ -10,6 +10,7 @@ import { AddComponent } from './modal/add/add.component';
 const routes: Routes = [
   { path: '', component: BookComponent},
   { path: 'view/:id', component: ViewComponent, outlet: 'popup'},
+  { path: 'edit/:id', component: AddComponent, outlet: 'popup'},
   { path: 'add', component: AddComponent, outlet: 'popup'}
 ];
 

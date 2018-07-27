@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { Response } from '@angular/http';
+import { DataStorageService } from '../../shared/data-storage.service';
 import { BookService } from '../book.service';
 import { Book } from '../book.model';
-
 declare const $: any;
 
 @Component({
@@ -9,31 +11,40 @@ declare const $: any;
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css']
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent implements OnInit, OnDestroy {
 
   allRecords: Book[];
   records: Book[];
   showCheckbox = false;
   filter = false;
 
+  subscription: Subscription;
+
   constructor(
-    private BookService: BookService
+    private BookService: BookService,
+    private DataStorageService: DataStorageService
   ) { }
 
   ngOnInit() {
 
     $(document).ready(function() {
-      $('.fixed-action-btn').floatingActionButton({
-        direction: 'left'
-      });
-    });
-
-    $(document).ready(function(){
       $('.modal').modal();
     });
 
+    this.subscription = this.BookService.recordsChanged
+    .subscribe(
+      (items: Book[]) => {
+        this.allRecords = items;
+        this.records = this.allRecords;
+      }
+    );
+
     this.allRecords = this.BookService.getRecords();
     this.records = this.allRecords;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   showCheckBoxes() {
@@ -58,6 +69,18 @@ export class BookListComponent implements OnInit {
     for (let i = 0; i < els.length; i++) {
       els[i].checked = target;
     }
+
+  }
+
+  onDelete(i) {
+    this.BookService.deleteRecord(i);
+
+    this.DataStorageService.saveData()
+    .subscribe(
+      (response: Response) => {
+        console.log(response);
+      }
+    );
 
   }
 

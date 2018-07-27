@@ -1,7 +1,3 @@
-table tr:hover {
-    cursor: pointer;
-}
-
 .links a{
     margin-left: 5px;
 }
@@ -18,6 +14,17 @@ table tr:hover {
 
 .actions {
     position: relative;
+    text-align: right;
+}
+
+.actions ul {
+    padding: 0;
+    margin: 0;
+}
+
+.actions li{
+    display: inline-block;
+    margin-left: 5px;
 }
 
 .fixed-action-btn {

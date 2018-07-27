@@ -5,7 +5,7 @@
 
 <app-book-filter *ngIf="filter" [records]="allRecords" (recordsChanged)="onRecordsChanged($event)"></app-book-filter>
 
-<table class="highlight responsive-table records" *ngIf="records; else info">
+<table class="highlight responsive-table records" *ngIf="allRecords.length; else info">
   <thead>
     <tr>
         <th *ngIf="showCheckbox">
@@ -33,16 +33,11 @@
       <td>{{ record.email }}</td>
       <td>{{ record.mobile }}</td>
       <td class="actions">
-        <div class="fixed-action-btn">
-          <a class="btn-floating btn-flat red">
-            <i class="large material-icons">menu</i>
-          </a>
-          <ul>
-            <li><a [routerLink]="[{ outlets: { 'popup': [ 'view', i] }}]" skipLocationChange class="btn-floating green"><i class="material-icons">pageview</i></a></li>
-            <li><a class="btn-floating yellow darken-1"><i class="material-icons">edit</i></a></li>
-            <li><a class="btn-floating red"><i class="material-icons">delete</i></a></li>
-          </ul>
-        </div>
+        <ul>
+          <li><a [routerLink]="[{ outlets: { 'popup': [ 'view', i] }}]" skipLocationChange class="btn-floating green"><i class="material-icons">pageview</i></a></li>
+          <li><a [routerLink]="[{ outlets: { 'popup': [ 'edit', i] }}]" skipLocationChange class="btn-floating yellow darken-1"><i class="material-icons">edit</i></a></li>
+          <li><a (click)="onDelete(i)" class="btn-floating red"><i class="material-icons">delete</i></a></li>
+        </ul>
       </td>
     </tr>
   </tbody>
@@ -54,6 +49,5 @@
 
 
 <ng-template #search>
-  <h5 class="center-align">По заданим критеріям нічого не знайдено</h5>
-</ng-template>
-
+    <h5 class="center-align">По заданим критерія нічого не знайдено</h5>
+  </ng-template>
