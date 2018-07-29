@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 import { DataStorageService } from '../shared/data-storage.service';
+import { BookService } from '../book/book.service';
+import { data } from '../book/data';
+import swal from 'sweetalert2';
 
 declare const $: any;
 
@@ -11,8 +14,10 @@ declare const $: any;
 })
 export class HeaderComponent implements OnInit {
 
+  private toExport = [];
+  private items = data;
 
-  constructor(private DataStorageService: DataStorageService) { }
+  constructor(private DataStorageService: DataStorageService, private BookService: BookService) { }
 
   ngOnInit() {
 
@@ -22,6 +27,30 @@ export class HeaderComponent implements OnInit {
 
     this.DataStorageService.getData();
 
+  }
+
+  export () {
+
+    let elements = document.querySelectorAll('.checkbox:checked');
+    let items = Array.from(elements);
+
+    if (!items.length) {
+      swal(
+        'Не вибрано даних для експорту',
+        'Необхідна вказати, які дані необхідно експортувати',
+        'info'
+      );
+    } else {
+      for (let i = 0; i < items.length; i++) {
+        this.toExport.push(this.BookService.getRecordById(items[i].getAttribute('value')));
+      }
+      new Angular5Csv(this.toExport, 'My contacts');
+    }
+
+  }
+
+  import () {
+    this.BookService.setRecords(this.items);
   }
 
 }

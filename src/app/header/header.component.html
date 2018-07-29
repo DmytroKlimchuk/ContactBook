@@ -5,8 +5,23 @@
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         <li><a [routerLink]="[{ outlets: { 'popup': [ 'add'] }}]" skipLocationChange>Додати новий</a></li>
-        <li><a routerLink="/" href="#">Контакти</a></li>
-        <li><a href="#">Експорт</a></li>
+        <li><a routerLink="/">Контакти</a></li>
+        <li><a (click)="export()">Експорт</a></li>
+        <li><a 
+          [swal]="
+          { 
+            title: 'Ви впевнені, що хочете імпортувати демо дані?',
+            text: 'Всі контакти будуть перезаписані!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Імпортувати!',
+            cancelButtonText: 'Відмінити'
+          }
+          "
+          (confirm)="import()"
+          >Імпорт</a></li>
         <li><a href="#">Вхід</a></li>
         <li><a href="#">Вихід</a></li>
       </ul>
@@ -16,8 +31,9 @@
   
 <ul class="sidenav" id="mobile-demo">
   <li><a [routerLink]="[{ outlets: { 'popup': [ 'add'] }}]" skipLocationChange>Додати новий</a></li>
-  <li><a href="#">Контакти</a></li>
-  <li><a href="#">Експорт</a></li>
+  <li><a routerLink="/">Контакти</a></li>
+  <li><a (click)="export()">Експорт</a></li>
+  <li><a (click)="import()">Імпорт</a></li>
   <li><a href="#">Вхід</a></li>
   <li><a href="#">Вихід</a></li>
 </ul>

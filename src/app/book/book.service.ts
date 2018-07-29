@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Book } from './book.model';
 import { data } from './data';
+import swal from 'sweetalert2';
 declare const M: any;
 declare const $: any;
 
@@ -11,16 +12,15 @@ export class BookService {
 
   private records: Book[] = [];
 
-
   constructor() { }
 
   getRecords() {
-    return this.records.slice();
+    return this.records;
   }
 
   setRecords(items: Book[]) {
     this.records = items;
-    this.recordsChanged.next(this.records.slice());
+    this.recordsChanged.next(this.records);
   }
 
   getCities() {
@@ -50,24 +50,21 @@ export class BookService {
         break;
       }
     }
-
-    M.toast({html: 'Оновлено контакт'});
+    swal('Контакт успішно оновлено!', '', 'success');
     this.recordsChanged.next(this.records);
   }
 
   deleteRecord(id) {
     this.records = this.records.filter(item => item.id != id);
-    M.toast({html: 'Видалено контакт'});
-    this.recordsChanged.next(this.records.slice());
+    this.recordsChanged.next(this.records);
   }
 
   addRecord(item) {
     console.log('add');
     item.id = this.getLastId() + 1;
-
     this.records.push(item);
-    M.toast({html: 'Додано новий контакт'});
-    this.recordsChanged.next(this.records.slice());
+    swal('Новий контакт додано!', '', 'success');
+    this.recordsChanged.next(this.records);
   }
 
   getLastId() {

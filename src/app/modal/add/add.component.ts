@@ -1,11 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Book } from '../../book/book.model';
 import { BookService } from '../../book/book.service';
-import { Response } from '@angular/http';
-import { DataStorageService } from '../../shared/data-storage.service';
-import { Subscription } from 'rxjs/Subscription';
 import swal from 'sweetalert2';
 declare const $: any;
 declare const M: any;
@@ -15,17 +11,15 @@ declare const M: any;
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.css']
 })
-export class AddComponent implements OnInit, OnDestroy {
+export class AddComponent implements OnInit {
 
   id: number;
   editMode = false;
   bookForm: FormGroup;
-  subscription: Subscription;
 
   constructor(  private route: ActivatedRoute,
                 private router: Router,
-                private BookService: BookService,
-                private DataStorageService: DataStorageService) { }
+                private BookService: BookService) { }
 
   ngOnInit() {
 
@@ -39,17 +33,6 @@ export class AddComponent implements OnInit, OnDestroy {
       this.initForm();
     });
 
-    this.subscription = this.BookService.recordsChanged
-    .subscribe(
-      (items: Book[]) => {
-        this.onSave();
-      }
-    );
-
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   onSubmit () {
@@ -76,21 +59,9 @@ export class AddComponent implements OnInit, OnDestroy {
 
               this.BookService.updateRecord(item.id, this.bookForm.value);
 
-              swal(
-                'Deleted!',
-                'Контакт успішно оновлено',
-                'success'
-              );
-
             } else if (result.dismiss === swal.DismissReason.cancel) {
 
               this.BookService.addRecord(this.bookForm.value);
-
-              swal(
-                'Deleted!',
-                'Створено новий контакт.',
-                'success'
-              );
 
             }
         });
@@ -133,17 +104,6 @@ export class AddComponent implements OnInit, OnDestroy {
       'mobile': new FormControl(mobile, [ Validators.required, Validators.pattern('\\d+') ]),
       'company': new FormControl(company)
     });
-  }
-
-  onSave() {
-
-    this.DataStorageService.saveData()
-    .subscribe(
-      (response: Response) => {
-        console.log(response);
-      }
-    );
-
   }
 
 }

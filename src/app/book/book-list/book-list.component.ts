@@ -32,16 +32,18 @@ export class BookListComponent implements OnInit, OnDestroy {
       $('.modal').modal();
     });
 
+    this.allRecords = this.BookService.getRecords();
+    this.records = this.allRecords;
+
     this.subscription = this.BookService.recordsChanged
     .subscribe(
       (items: Book[]) => {
         this.allRecords = items;
         this.records = this.allRecords;
+        this.onSave();
       }
     );
 
-    this.allRecords = this.BookService.getRecords();
-    this.records = this.allRecords;
   }
 
   ngOnDestroy() {
@@ -76,16 +78,9 @@ export class BookListComponent implements OnInit, OnDestroy {
   onDelete(i) {
     this.BookService.deleteRecord(i);
 
-    this.DataStorageService.saveData()
-    .subscribe(
-      (response: Response) => {
-        console.log(response);
-      }
-    );
-
     swal(
-      'Deleted!',
-      'Your file has been deleted.',
+      'Видалено!',
+      'Контакт успішно видалено',
       'success'
     );
 
@@ -93,6 +88,28 @@ export class BookListComponent implements OnInit, OnDestroy {
 
   onRecordsChanged(items: Book[]) {
     this.records = items;
+  }
+
+  deleteSelected() {
+    let elements = document.querySelectorAll('.checkbox:checked');
+    let items = Array.from(elements);
+
+    for (let i = 0; i < items.length; i++) {
+      this.BookService.deleteRecord(items[i].getAttribute('value'));
+    }
+
+    swal('Обрані контакти успішно видалено', '', 'success');
+  }
+
+  onSave() {
+
+    this.DataStorageService.saveData()
+    .subscribe(
+      (response: Response) => {
+        console.log(response);
+      }
+    );
+
   }
 
 }
