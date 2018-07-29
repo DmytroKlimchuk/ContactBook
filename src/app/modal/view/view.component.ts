@@ -20,7 +20,7 @@ export class ViewComponent implements OnInit {
 
     this.subscriptionId = route.params.subscribe((params) => {
       this.id = params['id'];
-      this.record = BookService.getRecordById(this.id);
+      this.record = this.BookService.getRecordById(this.id);
     });
 
    }

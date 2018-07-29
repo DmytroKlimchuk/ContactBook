@@ -1,5 +1,6 @@
 export const data = [
     {
+        'id': 0,
         'surname': 'Пупкін',
         'name': 'Вася',
         'country': 'Україна',
@@ -9,6 +10,7 @@ export const data = [
         'company': 'Google'
     },
     {
+        'id': 1,
         'surname': 'Сидоров',
         'name': 'Іван',
         'country': 'Україна',
@@ -18,6 +20,7 @@ export const data = [
         'company': 'Yandex'
     },
     {
+        'id': 2,
         'surname': 'Іванов',
         'name': 'Петро',
         'country': 'Україна',
@@ -27,6 +30,7 @@ export const data = [
         'company': 'SoftServe'
     },
     {
+        'id': 3,
         'surname': 'Семенов',
         'name': 'Андрій',
         'country': 'Україна',
@@ -36,6 +40,7 @@ export const data = [
         'company': 'SoftGroup'
     },
     {
+        'id': 4,
         'surname': 'Ковальов',
         'name': 'Тарас',
         'country': 'Україна',

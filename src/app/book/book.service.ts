@@ -33,26 +33,45 @@ export class BookService {
     return cities;
   }
 
-  getRecordById(id) {
-    return this.records[id];
+  getRecordById(id): Book {
+    return this.records.find(item => item.id == id);
+  }
+
+  getRecordByEmail(email): Book {
+    return this.records.find(item => item.email == email);
   }
 
   updateRecord(id, form) {
-    this.records[id] = form;
+    for (let i in this.records) {
+      if (this.records[i].id == id) {
+        this.records[i] = form;
+        this.records[i].id = id;
+        console.log(this.records[i]);
+        break;
+      }
+    }
+
     M.toast({html: 'Оновлено контакт'});
-    this.recordsChanged.next(this.records.slice());
+    this.recordsChanged.next(this.records);
   }
 
   deleteRecord(id) {
-    this.records.splice(id, 1);
+    this.records = this.records.filter(item => item.id != id);
     M.toast({html: 'Видалено контакт'});
     this.recordsChanged.next(this.records.slice());
   }
 
   addRecord(item) {
     console.log('add');
+    item.id = this.getLastId() + 1;
+
     this.records.push(item);
     M.toast({html: 'Додано новий контакт'});
     this.recordsChanged.next(this.records.slice());
   }
+
+  getLastId() {
+    return +this.records[this.records.length - 1].id;
+  }
+
 }

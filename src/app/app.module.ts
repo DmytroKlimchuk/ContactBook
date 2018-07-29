@@ -11,6 +11,7 @@ import { DataStorageService } from './shared/data-storage.service';
 import { BookService } from './book/book.service';
 import { BookFilterComponent } from './book/book-filter/book-filter.component';
 import { RoutingrModule, routeComponents } from './router.module';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -26,9 +27,10 @@ import { RoutingrModule, routeComponents } from './router.module';
     RoutingrModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    SweetAlert2Module.forRoot()
   ],
   providers: [ BookService, DataStorageService ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -5,6 +5,7 @@ import { DataStorageService } from '../../shared/data-storage.service';
 import { BookService } from '../book.service';
 import { Book } from '../book.model';
 declare const $: any;
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-book-list',
@@ -80,6 +81,12 @@ export class BookListComponent implements OnInit, OnDestroy {
       (response: Response) => {
         console.log(response);
       }
+    );
+
+    swal(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
     );
 
   }

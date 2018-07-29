@@ -1,12 +1,5 @@
-// - Прізвище (обов'язкове поле)
-// - ім'я (обов'язкове поле)
-// - країна
-// - місто
-// - email (обов'язкове поле)
-// - номер телефону (обов'язкове поле)
-// - місце роботи (назва компанії)
-
 interface IBook {
+    id: number;
     surname: string;
     name: string;
     country: string;
@@ -19,6 +12,7 @@ interface IBook {
 export class Book implements IBook {
 
     constructor (
+        public id: number,
         public surname: string,
         public name: string,
         public country: string,

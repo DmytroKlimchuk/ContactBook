@@ -22,10 +22,10 @@
   </thead>
 
   <tbody *ngIf="records.length; else search">
-    <tr *ngFor="let record of records; let i = index" (click)="checkRecord(i)">
+    <tr *ngFor="let record of records; let i = index" (click)="checkRecord(record.id)">
       <td *ngIf="showCheckbox">
         <label>
-          <input type="checkbox" class="checkbox" id="check_{{ i }}" value="{{ i }}"/><span></span>
+          <input type="checkbox" class="checkbox" id="check_{{ record.id }}" value="{{ record.id }}"/><span></span>
         </label>
       </td>
       <td>{{ record.surname }}</td>
@@ -34,9 +34,23 @@
       <td>{{ record.mobile }}</td>
       <td class="actions">
         <ul>
-          <li><a [routerLink]="[{ outlets: { 'popup': [ 'view', i] }}]" skipLocationChange class="btn-floating green"><i class="material-icons">pageview</i></a></li>
-          <li><a [routerLink]="[{ outlets: { 'popup': [ 'edit', i] }}]" skipLocationChange class="btn-floating yellow darken-1"><i class="material-icons">edit</i></a></li>
-          <li><a (click)="onDelete(i)" class="btn-floating red"><i class="material-icons">delete</i></a></li>
+          <li><a [routerLink]="[{ outlets: { 'popup': [ 'view', record.id] }}]" skipLocationChange class="btn-floating green"><i class="material-icons">pageview</i></a></li>
+          <li><a [routerLink]="[{ outlets: { 'popup': [ 'edit', record.id] }}]" skipLocationChange class="btn-floating yellow darken-1"><i class="material-icons">edit</i></a></li>
+          <li><a 
+            [swal]="
+            { 
+              title: 'Ви впевнені??',
+              text: 'Ви не зможете відмінити операцію!',
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Так, видалити!',
+              cancelButtonText: 'Відмінити'
+            }
+            "
+            (confirm)="onDelete(record.id)"
+            class="btn-floating red"><i class="material-icons">delete</i></a></li>
         </ul>
       </td>
     </tr>
