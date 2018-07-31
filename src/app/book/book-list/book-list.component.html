@@ -1,62 +1,78 @@
-<div class="right-align links">
-    <a (click)="deleteSelected()" *ngIf="showCheckbox" class="waves-effect waves-light btn-small red darken-2"><i class="material-icons left">delete</i>Видалити</a>
-    <a (click)="showCheckBoxes()" class="waves-effect waves-light btn-small"><i class="material-icons left">check</i>Вибрати</a>
-    <a (click)="showFilter()" class="waves-effect waves-light btn-small"><i class="material-icons right">settings</i>Фільтр</a>
-</div>
+<div *ngIf="allRecords.length; else info">
+  <div class="right-align links">
+      <a 
+      [swal]="
+      { 
+        title: 'Впевнені, що хочете видатити?',
+        text: 'Ви не зможете відмінити операцію!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Так, видалити!',
+        cancelButtonText: 'Відмінити'
+      }
+      "
+      (confirm)="deleteSelected()"
+      *ngIf="showCheckbox" class="waves-effect waves-light btn-small red darken-2"><i class="material-icons left">delete</i>Видалити</a>
+      <a (click)="showCheckBoxes()" class="waves-effect waves-light btn-small"><i class="material-icons left">check</i>Вибрати</a>
+      <a (click)="showFilter()" class="waves-effect waves-light btn-small"><i class="material-icons right">settings</i>Фільтр</a>
+  </div>
 
-<app-book-filter *ngIf="filter" [records]="allRecords" (recordsChanged)="onRecordsChanged($event)"></app-book-filter>
+  <app-book-filter *ngIf="filter" [records]="allRecords" (recordsChanged)="onRecordsChanged($event)"></app-book-filter>
 
-<table class="highlight responsive-table records" *ngIf="allRecords.length; else info">
-  <thead>
-    <tr>
-        <th *ngIf="showCheckbox">
+  <table class="highlight responsive-table records">
+    <thead>
+      <tr>
+          <th *ngIf="showCheckbox">
+            <label>
+                <input type="checkbox" (click)="checkAll($event)"/><span></span>
+            </label>
+          </th>
+          <th>Прізвище</th>
+          <th>Ім'я</th>
+          <th>E-mail</th>
+          <th>Мобільний</th>
+          <th></th>
+      </tr>
+    </thead>
+
+    <tbody *ngIf="records.length; else search">
+      <tr *ngFor="let record of records; let i = index" (click)="checkRecord(record.id)">
+        <td *ngIf="showCheckbox">
           <label>
-              <input type="checkbox" (click)="checkAll($event)"/><span></span>
+            <input type="checkbox" class="checkbox" name="item[]" id="check_{{ record.id }}" value="{{ record.id }}"/><span></span>
           </label>
-        </th>
-        <th>Прізвище</th>
-        <th>Ім'я</th>
-        <th>E-mail</th>
-        <th>Мобільний</th>
-        <th></th>
-    </tr>
-  </thead>
-
-  <tbody *ngIf="records.length; else search">
-    <tr *ngFor="let record of records; let i = index" (click)="checkRecord(record.id)">
-      <td *ngIf="showCheckbox">
-        <label>
-          <input type="checkbox" class="checkbox" name="item[]" id="check_{{ record.id }}" value="{{ record.id }}"/><span></span>
-        </label>
-      </td>
-      <td>{{ record.surname }}</td>
-      <td>{{ record.name }}</td>
-      <td>{{ record.email }}</td>
-      <td>{{ record.mobile }}</td>
-      <td class="actions">
-        <ul>
-          <li><a [routerLink]="[{ outlets: { 'popup': [ 'view', record.id] }}]" skipLocationChange class="btn-floating green"><i class="material-icons">pageview</i></a></li>
-          <li><a [routerLink]="[{ outlets: { 'popup': [ 'edit', record.id] }}]" skipLocationChange class="btn-floating yellow darken-1"><i class="material-icons">edit</i></a></li>
-          <li><a 
-            [swal]="
-            { 
-              title: 'Ви впевнені??',
-              text: 'Ви не зможете відмінити операцію!',
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Так, видалити!',
-              cancelButtonText: 'Відмінити'
-            }
-            "
-            (confirm)="onDelete(record.id)"
-            class="btn-floating red"><i class="material-icons">delete</i></a></li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        </td>
+        <td>{{ record.surname }}</td>
+        <td>{{ record.name }}</td>
+        <td>{{ record.email }}</td>
+        <td>{{ record.mobile }}</td>
+        <td class="actions">
+          <ul>
+            <li><a [routerLink]="[{ outlets: { 'popup': [ 'view', record.id] }}]" skipLocationChange class="btn-floating green"><i class="material-icons">pageview</i></a></li>
+            <li><a [routerLink]="[{ outlets: { 'popup': [ 'edit', record.id] }}]" skipLocationChange class="btn-floating yellow darken-1"><i class="material-icons">edit</i></a></li>
+            <li><a 
+              [swal]="
+              { 
+                title: 'Ви впевнені??',
+                text: 'Ви не зможете відмінити операцію!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Так, видалити!',
+                cancelButtonText: 'Відмінити'
+              }
+              "
+              (confirm)="onDelete(record.id)"
+              class="btn-floating red"><i class="material-icons">delete</i></a></li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <ng-template #info>
   <h5 class="center-align">Список контактів порожній</h5>

@@ -94,11 +94,16 @@ export class BookListComponent implements OnInit, OnDestroy {
     let elements = document.querySelectorAll('.checkbox:checked');
     let items = Array.from(elements);
 
-    for (let i = 0; i < items.length; i++) {
-      this.BookService.deleteRecord(items[i].getAttribute('value'));
+    if (items.length) {
+      for (let i = 0; i < items.length; i++) {
+        this.BookService.deleteRecord(items[i].getAttribute('value'));
+      }
+      swal('Обрані контакти успішно видалено', '', 'success');
+    } else {
+      swal('Необхідно вказати, які контакти видалити', '', 'info');
     }
 
-    swal('Обрані контакти успішно видалено', '', 'success');
+
   }
 
   onSave() {

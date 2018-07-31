@@ -13,6 +13,12 @@ import { BookFilterComponent } from './book/book-filter/book-filter.component';
 import { RoutingrModule, routeComponents } from './router.module';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../environments/environment';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+import { AuthService } from './user/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,9 +34,11 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule
   ],
-  providers: [ BookService, DataStorageService ],
+  providers: [ BookService, DataStorageService, AuthService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

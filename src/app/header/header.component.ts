@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 import { DataStorageService } from '../shared/data-storage.service';
 import { BookService } from '../book/book.service';
+import { AuthService } from '../user/auth.service';
+
 import { data } from '../book/data';
 import swal from 'sweetalert2';
 
@@ -17,7 +19,10 @@ export class HeaderComponent implements OnInit {
   private toExport = [];
   private items = data;
 
-  constructor(private DataStorageService: DataStorageService, private BookService: BookService) { }
+  constructor(  private DataStorageService: DataStorageService,
+                private BookService: BookService,
+                private AuthService: AuthService
+              ) { }
 
   ngOnInit() {
 
@@ -36,8 +41,8 @@ export class HeaderComponent implements OnInit {
 
     if (!items.length) {
       swal(
-        'Не вибрано даних для експорту',
-        'Необхідна вказати, які дані необхідно експортувати',
+        'Не вибрано дані!',
+        'Необхідно вказати, які дані необхідно експортувати',
         'info'
       );
     } else {
@@ -51,6 +56,10 @@ export class HeaderComponent implements OnInit {
 
   import () {
     this.BookService.setRecords(this.items);
+  }
+
+  logout () {
+    this.AuthService.logout();
   }
 
 }

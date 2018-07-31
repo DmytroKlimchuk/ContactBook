@@ -6,18 +6,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { BookComponent } from './book/book.component';
 import { ViewComponent } from './modal/view/view.component';
 import { AddComponent } from './modal/add/add.component';
+import { LoginComponent } from './user/login/login.component';
 
 const routes: Routes = [
   { path: '', component: BookComponent},
   { path: 'view/:id', component: ViewComponent, outlet: 'popup'},
   { path: 'edit/:id', component: AddComponent, outlet: 'popup'},
-  { path: 'add', component: AddComponent, outlet: 'popup'}
+  { path: 'add', component: AddComponent, outlet: 'popup'},
+  { path: 'login', component: LoginComponent}
 ];
 
 export const routeComponents = [
   BookComponent,
   ViewComponent,
-  AddComponent
+  AddComponent,
+  LoginComponent
 ];
 
 @NgModule({

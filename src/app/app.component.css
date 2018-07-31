@@ -5,3 +5,9 @@ table tr:hover {
     padding-top: 30px;
     padding-bottom: 30px;
 }
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+}
