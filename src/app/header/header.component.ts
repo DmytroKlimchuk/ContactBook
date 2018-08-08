@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Angular5Csv } from 'angular5-csv/Angular5-csv';
-import { DataStorageService } from '../shared/data-storage.service';
 import { BookService } from '../book/book.service';
 import { AuthService } from '../user/auth.service';
-
+import { Subscription } from 'rxjs/Subscription';
 import { data } from '../book/data';
 import swal from 'sweetalert2';
 
@@ -15,11 +14,12 @@ declare const $: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
+  show = false;
+  subscription: Subscription;
   private toExport = [];
   private items = data;
 
-  constructor(  private DataStorageService: DataStorageService,
+  constructor(
                 private BookService: BookService,
                 private AuthService: AuthService
               ) { }
@@ -30,7 +30,12 @@ export class HeaderComponent implements OnInit {
       $('.sidenav').sidenav();
     });
 
-    this.DataStorageService.getData();
+    this.subscription = this.AuthService.AuthState
+    .subscribe(
+      ( state ) => {
+        this.show = state;
+      }
+    );
 
   }
 

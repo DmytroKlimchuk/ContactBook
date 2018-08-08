@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Subject } from 'rxjs/Subject';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import swal from 'sweetalert2';
 
 @Injectable({
@@ -10,14 +10,17 @@ import swal from 'sweetalert2';
 })
 export class AuthService {
 
+  AuthState = new Subject();
   user: firebase.User = null;
 
   constructor(  private firebaseAuth: AngularFireAuth,
                 private router: Router ) {
+
     firebaseAuth.authState.subscribe( user => {
       this.user = user;
       console.log(this.user);
     });
+
   }
 
   signup(email: string, password: string) {
@@ -33,8 +36,7 @@ export class AuthService {
           type: 'error',
           title: 'Помилка',
           text: err.message
-        }
-        );
+        });
       });
   }
 
@@ -48,8 +50,10 @@ export class AuthService {
           'Авторизація пройшла успішно!',
           '',
           'success'
-        );
-        this.router.navigate(['/']);
+        ).then(() => {
+          this.AuthState.next(this.isAuthenticated());
+          this.router.navigate(['/']);
+        });
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
@@ -66,7 +70,20 @@ export class AuthService {
   logout() {
     this.firebaseAuth
       .auth
-      .signOut();
+      .signOut().then(() => {
+        this.router.navigate(['login']);
+        this.AuthState.next(false);
+      });
+  }
+
+  isAuthenticated (): boolean {
+
+    if ( this.user != null ) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
 
 }

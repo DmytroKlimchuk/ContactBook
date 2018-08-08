@@ -1,9 +1,9 @@
 <nav>
   <div class="nav-wrapper">
     <div class="container">
-      <a routerlink="/" class="brand-logo">Contacts Book</a>
+      <a class="brand-logo" routerLink="/">Contacts Book</a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down" *ngIf="this.AuthService.user">
+      <ul class="right hide-on-med-and-down" *ngIf="show">
         <li><a [routerLink]="[{ outlets: { 'popup': [ 'add'] }}]" skipLocationChange>Додати новий</a></li>
         <li><a (click)="export()">Експорт</a></li>
         <li><a 
@@ -27,7 +27,7 @@
   </div>
 </nav>
   
-<ul class="sidenav" id="mobile-demo" *ngIf="this.AuthService.user">
+<ul class="sidenav" id="mobile-demo" *ngIf="show">
   <li><a [routerLink]="[{ outlets: { 'popup': [ 'add'] }}]" skipLocationChange>Додати новий</a></li>
   <li><a (click)="export()">Експорт</a></li>
   <li><a (click)="import()">Імпорт</a></li>
