@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
 
     this.subscription = this.AuthService.AuthState
     .subscribe(
-      ( state ) => {
+      ( state: boolean ) => {
         this.show = state;
       }
     );

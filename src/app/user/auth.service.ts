@@ -29,6 +29,7 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
         console.log('Success!', value);
+        swal('Користувача створено', 'Тепер ви можете зайти на сайт, використовуючи ваш логін та пароль', 'success');
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
@@ -52,18 +53,33 @@ export class AuthService {
           'success'
         ).then(() => {
           this.AuthState.next(this.isAuthenticated());
-          this.router.navigate(['/']);
+          this.router.navigate(['']);
         });
       })
       .catch(err => {
+        console.log(err.code);
         console.log('Something went wrong:', err.message);
-        swal(
-          {
-            type: 'error',
-            title: 'Помилка',
-            text: err.message
-          }
-        );
+
+        switch (err.code) {
+          case 'auth/user-not-found' : swal({
+              type: 'error',
+              title: 'Помилка авторизації',
+              text: 'Такого користувача не знайдено!',
+              showCancelButton: true,
+              showConfirmButton: true,
+              confirmButtonText: 'Зареєструватися',
+              cancelButtonText: 'Скасувати'
+            })
+            .then ( (result) => {
+              if ( result.value ) {
+                this.signup(email, password);
+              }
+            })
+            .catch( error => console.log(error) );
+            break;
+          case 'auth/wrong-password' : swal({type: 'error', title: 'Помилка авторизації', text: 'Пароль не вірний!'}); break;
+        }
+
       });
   }
 
