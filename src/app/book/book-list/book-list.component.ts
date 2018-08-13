@@ -87,7 +87,8 @@ export class BookListComponent implements OnInit, OnDestroy {
   }
 
   onRecordsChanged(items: Book[]) {
-    this.records = items;
+    this.records = items.slice(this.page - 1, this.perPage * this.page);
+    this.total = Math.ceil(this.records.length / this.perPage);
   }
 
   deleteSelected() {

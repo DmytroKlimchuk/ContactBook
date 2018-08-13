@@ -29,7 +29,8 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
         console.log('Success!', value);
-        swal('Користувача створено', 'Тепер ви можете зайти на сайт, використовуючи ваш логін та пароль', 'success');
+        swal('Користувача створено', 'Тепер ви можете заходити на сайт, використовуючи ваш логін та пароль', 'success')
+        .then( () => this.login(email, password));
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
