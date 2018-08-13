@@ -2,26 +2,25 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
-## Development server
+Для початку в користувача має бути можливість авторизуватися. Якщо введені дані користувача співпадають з вже наявними, то здійснити вхід, якщо такого користувача немає, то запропонувати створити обліковий запис (автоматична реєстрація) після чого здійснити автоматичний вхід. Якщо якісь дані для входу не співпали, наприклад, пароль, то вивести про це відповідне повідомлення.
+Відповідно має бути і кнопка Вихід, для завершення поточного сеансу.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Кожен запис книги містить інформацію:
+- Прізвище (обов'язкове поле)
+- ім'я (обов'язкове поле)
+- країна
+- місто
+- email (обов'язкове поле)
+- номер телефону (обов'язкове поле)
+- місце роботи (назва компанії)
 
-## Code scaffolding
+Користувач повинен мати можливість додавання, редагування, видалення, перегляду списку всіх записів в таблиці (поля прізвище та ім'я, email і номер телефону) та можливість перегляду розширеної інформації про вибраний запис. При створенні\редагуванні запису забезпечити перевірку на валідність даних, які вводяться.
+Якщо email нового контакту при створенні співпали з вже наявним в базі (масиві), то вивести про це повідомлення, і запитати чи провести мерджинг даних - дозаповнити старий запис новими даними, чи створити новий контакт.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Також забезпечити можливість фільтрації записів в списку (для фільтру по полям країна та місто використати select).
 
-## Build
+В першому стовпці таблиці навпроти кожного запису є checkbox, що забезпечує можливість вибору кількох записів, які потім можна видалити разом (наприклад, як в gmail - обрали кілька листів, і видалили їх цілою групою). При видаленні запису(-ів) забезпечити підтвердження дії.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Також повинна бути кнопка Експорт, яка зберігає вибрані дані (через ті ж checkbox в таблиці) в сsv файл.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Реалізувати збереження записів між сеансами.
